@@ -64,36 +64,45 @@ export default function Home() {
             className="relative z-10 w-full max-w-4xl bg-white/80 backdrop-blur-xl rounded-[40px] shadow-2xl overflow-hidden flex flex-col md:flex-row min-h-[600px]"
         >
             {/* Left Side: Identity & Timer */}
-            <div className="w-full md:w-2/5 bg-gradient-to-br from-rose-100/50 to-white/50 p-10 flex flex-col items-center justify-center text-center border-b md:border-b-0 md:border-r border-white/60 relative">
+            <div className="w-full md:w-2/5 bg-gradient-to-br from-rose-50/80 to-white/80 p-10 flex flex-col items-center justify-center text-center border-b md:border-b-0 md:border-r border-white/60 relative">
                  {/* Avatars */}
-                 <div className="flex items-center gap-4 mb-8">
-                    <div className="w-20 h-20 rounded-full bg-white shadow-md flex items-center justify-center text-3xl font-serif text-rose-500 border-4 border-rose-100">
-                        H
+                 <div className="flex items-center gap-6 mb-8">
+                    <div className="w-24 h-24 rounded-full bg-white shadow-lg border-4 border-rose-200 overflow-hidden relative group">
+                        <img src="/H-Z/images/WechatIMG1769.jpg" alt="Boy" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                     </div>
                     <motion.div 
-                        animate={{ scale: [1, 1.2, 1] }}
-                        transition={{ repeat: Infinity, duration: 1.5 }}
-                        className="text-rose-500"
+                        animate={{ scale: [1, 1.3, 1] }}
+                        transition={{ repeat: Infinity, duration: 1.2 }}
+                        className="text-rose-500 relative z-10"
                     >
-                        <Heart fill="currentColor" size={32} />
+                        <Heart fill="#f43f5e" size={32} className="drop-shadow-lg" />
                     </motion.div>
-                    <div className="w-20 h-20 rounded-full bg-white shadow-md flex items-center justify-center text-3xl font-serif text-blue-400 border-4 border-blue-100">
-                        Z
+                    <div className="w-24 h-24 rounded-full bg-white shadow-lg border-4 border-blue-200 overflow-hidden relative group">
+                        <img src="/H-Z/images/WechatIMG1770.jpg" alt="Girl" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                     </div>
                  </div>
 
-                 <h2 className="text-2xl font-serif text-gray-800 mb-2">We fell in love</h2>
-                 <p className="text-rose-400 text-sm uppercase tracking-widest mb-8">{startDate}</p>
+                 <h2 className="text-3xl font-serif text-gray-800 mb-1 font-medium">H & Z</h2>
+                 <p className="text-rose-400 text-xs uppercase tracking-[0.2em] mb-8 font-sans">Loving you since {startDate}</p>
 
-                 <div className="space-y-2 w-full">
-                     <div className="text-gray-600 font-light">We have been together for</div>
-                     <div className="text-4xl font-serif text-rose-500 font-bold">
-                        {timeTogether.days} <span className="text-lg font-sans text-gray-400 font-normal">Days</span>
+                 <div className="space-y-3 w-full bg-white/50 rounded-2xl p-6 shadow-inner">
+                     <div className="text-gray-500 font-serif text-sm italic">We have been in love for</div>
+                     <div className="text-5xl font-serif text-rose-500 font-bold drop-shadow-sm">
+                        {timeTogether.days} <span className="text-sm font-sans text-gray-400 font-normal uppercase tracking-widest ml-1">Days</span>
                      </div>
-                     <div className="flex justify-center gap-4 text-gray-500 text-sm mt-2">
-                         <span>{timeTogether.hours} hrs</span>
-                         <span>{timeTogether.minutes} mins</span>
-                         <span>{timeTogether.seconds} s</span>
+                     <div className="flex justify-center gap-4 text-gray-500 text-xs font-medium tracking-wider pt-2 border-t border-gray-100">
+                         <div className="flex flex-col">
+                             <span className="text-lg text-gray-700 font-serif">{timeTogether.hours}</span>
+                             <span className="text-[10px] uppercase text-gray-400">Hours</span>
+                         </div>
+                         <div className="flex flex-col">
+                             <span className="text-lg text-gray-700 font-serif">{timeTogether.minutes}</span>
+                             <span className="text-[10px] uppercase text-gray-400">Mins</span>
+                         </div>
+                         <div className="flex flex-col">
+                             <span className="text-lg text-gray-700 font-serif">{timeTogether.seconds}</span>
+                             <span className="text-[10px] uppercase text-gray-400">Secs</span>
+                         </div>
                      </div>
                  </div>
             </div>

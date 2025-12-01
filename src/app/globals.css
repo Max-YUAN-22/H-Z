@@ -3,20 +3,32 @@
 @tailwind utilities;
 
 :root {
-  --background: #fff0f5; /* Lavender Blush */
+  --background: #fff0f5;
   --foreground: #4a4a4a;
-  --primary: #ffb7c5; /* Sakura Pink */
-  --secondary: #87cefa; /* Light Sky Blue */
 }
 
-/* Import a romantic Chinese font and a nice English handwriting font */
-@import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Sacramento&family=Noto+Serif+SC:wght@300;500&display=swap');
+/* 
+   Fonts:
+   - 'Noto Serif SC' for standard elegant text.
+   - 'Dancing Script' or 'Sacramento' for romantic headers.
+   - 'Ma Shan Zheng' for Chinese calligraphy style if needed.
+*/
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap');
 
 body {
   color: var(--foreground);
   background: var(--background);
   font-family: 'Noto Serif SC', serif;
   overflow-x: hidden;
+}
+
+/* Typography Utilities */
+.font-serif {
+  font-family: 'Playfair Display', 'Noto Serif SC', serif;
+}
+
+.font-script {
+  font-family: 'Dancing Script', cursive;
 }
 
 /* Custom Scrollbar */
@@ -27,42 +39,39 @@ body {
   background: #fff0f5;
 }
 ::-webkit-scrollbar-thumb {
-  background: #ffb7c5;
+  background: #fbcfe8; /* Rose 200 */
   border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #f472b6; /* Rose 400 */
 }
 
 /* Glassmorphism Card - Light Theme */
 .glass-card {
-    background: rgba(255, 255, 255, 0.6);
-    backdrop-filter: blur(12px);
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     border: 1px solid rgba(255, 255, 255, 0.8);
     box-shadow: 0 8px 32px 0 rgba(255, 182, 193, 0.2);
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .glass-card:hover {
-    background: rgba(255, 255, 255, 0.8);
-    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.9);
+    transform: translateY(-4px);
     box-shadow: 0 12px 40px 0 rgba(255, 182, 193, 0.4);
-}
-
-/* Text Gradients */
-.text-gradient-sakura {
-    background: linear-gradient(to right, #ff758c, #ff7eb3);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    border-color: #fff;
 }
 
 /* Animations */
 @keyframes float {
     0% { transform: translateY(0px); }
-    50% { transform: translateY(-15px); }
+    50% { transform: translateY(-10px); }
     100% { transform: translateY(0px); }
 }
 
 .animate-float {
-    animation: float 4s ease-in-out infinite;
+    animation: float 5s ease-in-out infinite;
 }
 
 @keyframes spin-slow {
@@ -72,4 +81,13 @@ body {
 
 .animate-spin-slow {
     animation: spin-slow 8s linear infinite;
+}
+
+@keyframes pulse-soft {
+    0%, 100% { opacity: 0.8; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.02); }
+}
+
+.animate-pulse-soft {
+    animation: pulse-soft 4s ease-in-out infinite;
 }
