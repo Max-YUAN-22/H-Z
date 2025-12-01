@@ -5,6 +5,8 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { Heart, Clock, Map, Mail, Music, Gift, Dog, History, Image as ImageIcon, Box, Gamepad2 } from "lucide-react";
 
+import FallingPetals from "../components/common/FallingPetals";
+
 export default function Home() {
   const [password, setPassword] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
@@ -12,7 +14,6 @@ export default function Home() {
   const [timeTogether, setTimeTogether] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
   const correctPassword = "1201";
-  // Set your start date here
   const startDate = "2023-12-01"; 
 
   useEffect(() => {
@@ -37,107 +38,96 @@ export default function Home() {
       setLoggedIn(true);
       setError("");
     } else {
-      setError("纪念日密码错误，请重试。");
+      setError("Incorrect password, try our anniversary date!");
     }
   };
 
   if (loggedIn) {
     return (
-      <div className="min-h-screen bg-[#0a0a0a] text-white flex flex-col items-center justify-center p-8 relative overflow-hidden">
-        {/* Background Image with Soft Romantic Overlay */}
-        <div className="absolute inset-0 z-0">
-            <img src="/H-Z/images/WechatIMG1764.jpg" alt="Background" className="w-full h-full object-cover opacity-40 blur-sm animate-pulse-soft" />
-            <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-purple-900/20 to-black/60 mix-blend-overlay" />
+      <div className="min-h-screen relative overflow-x-hidden">
+        {/* Full Screen Hero Background */}
+        <div className="fixed inset-0 z-0">
+            <img 
+                src="/H-Z/images/WechatIMG1764.jpg" 
+                alt="Background" 
+                className="w-full h-full object-cover opacity-90" 
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/20 to-[#fff0f5]" />
         </div>
 
-        {/* Floating Hearts Animation Layer */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-           {[...Array(20)].map((_, i) => (
-              <motion.div
-                key={i}
-                className="absolute text-rose-300/30"
-                initial={{ 
-                    x: Math.random() * 100 + "vw", 
-                    y: "100vh", 
-                    scale: Math.random() * 0.5 + 0.5,
-                    opacity: 0 
-                }}
-                animate={{ 
-                    y: "-10vh", 
-                    opacity: [0, 0.8, 0],
-                    rotate: Math.random() * 360 
-                }}
-                transition={{ 
-                    duration: Math.random() * 10 + 10, 
-                    repeat: Infinity, 
-                    delay: Math.random() * 10,
-                    ease: "linear" 
-                }}
-              >
-                  <Heart size={Math.random() * 30 + 20} fill="currentColor" />
-              </motion.div>
-           ))}
-        </div>
+        <FallingPetals />
 
-        {/* Love Timer Section */}
-        <motion.div 
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="mb-12 text-center z-10 relative"
-        >
-             <h1 className="text-6xl md:text-7xl font-thin tracking-[0.1em] mb-4 font-serif text-white drop-shadow-lg">H & Z SPACE</h1>
-             <div className="glass-card inline-flex items-center justify-center gap-6 md:gap-8 px-8 py-6 rounded-full mt-4">
-                <TimerUnit value={timeTogether.days} label="Days" />
-                <span className="text-3xl text-rose-300/50 pb-4">:</span>
-                <TimerUnit value={timeTogether.hours} label="Hours" />
-                <span className="text-3xl text-rose-300/50 pb-4">:</span>
-                <TimerUnit value={timeTogether.minutes} label="Mins" />
-                <span className="text-3xl text-rose-300/50 pb-4">:</span>
-                <TimerUnit value={timeTogether.seconds} label="Secs" />
-             </div>
-             <p className="text-rose-200/80 text-sm mt-6 tracking-[0.3em] uppercase font-medium">Falling in love since {startDate}</p>
-        </motion.div>
+        {/* Content Container */}
+        <div className="relative z-10 min-h-screen flex flex-col items-center pt-20 pb-10 px-4">
+            
+            {/* Header / Timer */}
+            <motion.div 
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="text-center mb-16"
+            >
+                 <h1 className="text-6xl md:text-8xl font-light tracking-wide mb-4 font-serif text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.3)]">
+                    H & Z
+                 </h1>
+                 <p className="text-white/90 text-lg tracking-[0.5em] uppercase font-medium mb-8 drop-shadow-md">
+                    Loving you since {startDate}
+                 </p>
+                 
+                 <div className="glass-card inline-flex items-center justify-center gap-4 md:gap-8 px-8 py-4 rounded-full bg-white/30 backdrop-blur-md border border-white/40 shadow-lg">
+                    <TimerUnit value={timeTogether.days} label="Days" />
+                    <span className="text-2xl text-white/80 pb-2">:</span>
+                    <TimerUnit value={timeTogether.hours} label="Hours" />
+                    <span className="text-2xl text-white/80 pb-2">:</span>
+                    <TimerUnit value={timeTogether.minutes} label="Mins" />
+                    <span className="text-2xl text-white/80 pb-2">:</span>
+                    <TimerUnit value={timeTogether.seconds} label="Secs" />
+                 </div>
+            </motion.div>
 
-        <div className="max-w-7xl w-full z-10">
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            <MenuCard href="/anniversary" title="Anniversary" subtitle="Interactive Heart" icon={<Heart className="text-rose-400" />} delay={0.1} featured />
-            <MenuCard href="/timeline" title="Timeline" subtitle="Our Story" icon={<History className="text-blue-300" />} delay={0.2} />
-            <MenuCard href="/gallery" title="Gallery" subtitle="Sweet Moments" icon={<ImageIcon className="text-pink-300" />} delay={0.25} />
-            <MenuCard href="/blindbox" title="Blind Box" subtitle="Surprises" icon={<Box className="text-purple-300" />} delay={0.3} />
-            <MenuCard href="/travel" title="Travel" subtitle="World Map" icon={<Map className="text-emerald-300" />} delay={0.3} />
-            <MenuCard href="/games" title="Games" subtitle="Play Together" icon={<Gamepad2 className="text-orange-300" />} delay={0.35} />
-            <MenuCard href="/mailbox" title="Mailbox" subtitle="Secret Letters" icon={<Mail className="text-yellow-300" />} delay={0.4} />
-            <MenuCard href="/wishtree" title="Wish Tree" subtitle="Make a Wish" icon={<Gift className="text-indigo-300" />} delay={0.5} />
-            <MenuCard href="/pet" title="Pet" subtitle="Our Companion" icon={<Dog className="text-amber-300" />} delay={0.6} />
-            <MenuCard href="/music" title="Music" subtitle="Our Playlist" icon={<Music className="text-cyan-300" />} delay={0.7} />
-            <MenuCard href="/timecapsule" title="Time Capsule" subtitle="Future Us" icon={<Clock className="text-teal-300" />} delay={0.8} />
-          </div>
+            {/* Menu Grid */}
+            <div className="max-w-6xl w-full">
+              <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <MenuCard href="/anniversary" title="Anniversary" subtitle="Our Special Day" icon={<Heart className="text-rose-500" />} delay={0.1} featured />
+                <MenuCard href="/timeline" title="Timeline" subtitle="Our Story" icon={<History className="text-blue-400" />} delay={0.2} />
+                <MenuCard href="/gallery" title="Gallery" subtitle="Sweet Memories" icon={<ImageIcon className="text-pink-400" />} delay={0.25} />
+                <MenuCard href="/blindbox" title="Blind Box" subtitle="Daily Surprise" icon={<Box className="text-purple-400" />} delay={0.3} />
+                <MenuCard href="/travel" title="Travel" subtitle="Places We've Been" icon={<Map className="text-emerald-400" />} delay={0.3} />
+                <MenuCard href="/games" title="Games" subtitle="Fun Time" icon={<Gamepad2 className="text-orange-400" />} delay={0.35} />
+                <MenuCard href="/mailbox" title="Mailbox" subtitle="Love Letters" icon={<Mail className="text-yellow-400" />} delay={0.4} />
+                <MenuCard href="/wishtree" title="Wish Tree" subtitle="Future Dreams" icon={<Gift className="text-indigo-400" />} delay={0.5} />
+                <MenuCard href="/pet" title="Pet" subtitle="Virtual Companion" icon={<Dog className="text-amber-500" />} delay={0.6} />
+                <MenuCard href="/music" title="Music" subtitle="Our Songs" icon={<Music className="text-cyan-400" />} delay={0.7} />
+                <MenuCard href="/timecapsule" title="Time Capsule" subtitle="To Future Us" icon={<Clock className="text-teal-400" />} delay={0.8} />
+              </div>
+            </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#0a0a0a] relative overflow-hidden">
+    <div className="flex min-h-screen items-center justify-center bg-[#fff0f5] relative overflow-hidden">
        {/* Background Image */}
         <div className="absolute inset-0 z-0">
-            <img src="/H-Z/images/WechatIMG1764.jpg" alt="Background" className="w-full h-full object-cover opacity-30 blur-md" />
-            <div className="absolute inset-0 bg-black/60" />
+            <img src="/H-Z/images/WechatIMG1764.jpg" alt="Background" className="w-full h-full object-cover opacity-80 blur-md" />
+            <div className="absolute inset-0 bg-white/30" />
         </div>
-       <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 pointer-events-none z-0"></div>
+       
+       <FallingPetals />
+
       <motion.div 
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        className="relative z-10 flex flex-col items-center justify-center rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 p-12 shadow-2xl w-full max-w-md"
+        className="relative z-10 flex flex-col items-center justify-center rounded-3xl bg-white/40 backdrop-blur-xl border border-white/60 p-12 shadow-2xl w-full max-w-md"
       >
-        <h1 className="mb-2 text-3xl font-light tracking-[0.3em] text-white">H&Z</h1>
-        <p className="mb-8 text-white/40 text-xs uppercase tracking-widest">Private Space</p>
+        <h1 className="mb-2 text-4xl font-serif tracking-widest text-rose-500 drop-shadow-sm">H & Z</h1>
+        <p className="mb-8 text-rose-400/80 text-xs uppercase tracking-[0.3em]">Our Little World</p>
         
         <div className="w-full space-y-4">
             <input
             type="password"
-            className="w-full rounded-lg bg-black/20 border border-white/10 p-4 text-center text-white placeholder-white/20 focus:border-rose-500/50 focus:outline-none transition-all"
-            placeholder="ENTER PASSCODE"
+            className="w-full rounded-xl bg-white/50 border border-white/50 p-4 text-center text-rose-500 placeholder-rose-300 focus:border-rose-400 focus:outline-none transition-all shadow-inner"
+            placeholder="ENTER PASSWORD"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             onKeyPress={(e) => {
@@ -147,13 +137,13 @@ export default function Home() {
             }}
             />
             <button
-            className="w-full rounded-lg bg-rose-500/80 hover:bg-rose-500 p-4 text-white font-medium tracking-wider transition-all"
+            className="w-full rounded-xl bg-gradient-to-r from-rose-400 to-pink-500 hover:from-rose-500 hover:to-pink-600 p-4 text-white font-bold tracking-wider transition-all shadow-lg hover:shadow-rose-300/50 transform hover:-translate-y-1"
             onClick={handleLogin}
             >
-            ENTER
+            OPEN LOVE
             </button>
         </div>
-        {error && <p className="mt-4 text-rose-400 text-sm">{error}</p>}
+        {error && <p className="mt-4 text-rose-500 text-sm bg-white/50 px-3 py-1 rounded-full">{error}</p>}
       </motion.div>
     </div>
   );
@@ -161,11 +151,11 @@ export default function Home() {
 
 function TimerUnit({ value, label }: { value: number, label: string }) {
     return (
-        <div className="flex flex-col items-center">
-            <span className="text-4xl md:text-5xl font-light text-white drop-shadow-md font-serif">
+        <div className="flex flex-col items-center min-w-[60px]">
+            <span className="text-3xl md:text-5xl font-light text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.2)] font-serif">
                 {value.toString().padStart(2, '0')}
             </span>
-            <span className="text-[10px] md:text-xs uppercase tracking-[0.2em] text-rose-200/70 mt-1 font-sans">
+            <span className="text-[10px] md:text-xs uppercase tracking-[0.2em] text-white/90 mt-1 font-sans font-medium">
                 {label}
             </span>
         </div>
@@ -180,20 +170,20 @@ function MenuCard({ href, title, subtitle, icon, delay, featured = false }: any)
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay, duration: 0.5 }}
         whileHover={{ scale: 1.03, y: -5 }}
-        className={`h-full flex flex-col justify-between p-6 rounded-3xl cursor-pointer group transition-all duration-300 ${
+        className={`h-full flex flex-col justify-between p-6 rounded-3xl cursor-pointer group transition-all duration-300 shadow-sm hover:shadow-xl ${
             featured 
-            ? "bg-gradient-to-br from-rose-500/20 to-purple-600/20 border border-rose-200/30 shadow-[0_0_30px_rgba(244,63,94,0.2)] p-8 backdrop-blur-xl" 
-            : "glass-card hover:bg-white/20 hover:border-white/40 hover:shadow-lg"
+            ? "bg-gradient-to-br from-white/80 to-white/40 border border-white/60 p-8 backdrop-blur-xl" 
+            : "bg-white/60 hover:bg-white/80 border border-white/50 backdrop-blur-md"
         }`}
       >
-        <div className={`mb-4 w-12 h-12 rounded-full flex items-center justify-center transition-colors duration-300 ${
-            featured ? "bg-rose-500/20 group-hover:bg-rose-500/30 text-white" : "bg-white/10 group-hover:bg-white/20"
+        <div className={`mb-4 w-14 h-14 rounded-full flex items-center justify-center transition-colors duration-300 shadow-md ${
+            featured ? "bg-rose-100 text-rose-500" : "bg-white text-gray-600"
         }`}>
             {icon}
         </div>
         <div>
-            <h3 className={`font-light mb-1 text-white font-serif ${featured ? "text-3xl" : "text-xl"}`}>{title}</h3>
-            <p className="text-white/60 text-xs uppercase tracking-wider font-sans">{subtitle}</p>
+            <h3 className={`font-medium mb-1 text-gray-800 font-serif ${featured ? "text-3xl" : "text-xl"}`}>{title}</h3>
+            <p className="text-gray-500 text-xs uppercase tracking-wider font-sans">{subtitle}</p>
         </div>
       </motion.div>
     </Link>

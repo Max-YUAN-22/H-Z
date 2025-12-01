@@ -67,16 +67,18 @@ export default function GlobalMusicPlayer() {
             if (!isPlaying) setIsPlaying(true);
             setIsExpanded(!isExpanded);
         }}
-        className={`relative flex h-14 w-14 items-center justify-center rounded-full border transition-all duration-500 ${
+        className={`relative flex h-14 w-14 items-center justify-center rounded-full border transition-all duration-500 shadow-lg ${
           isPlaying 
-            ? "bg-rose-500/80 border-rose-400 text-white shadow-[0_0_20px_rgba(244,63,94,0.4)] backdrop-blur-xl" 
-            : "bg-white/10 border-white/20 text-white/80 backdrop-blur-md hover:bg-white/20"
+            ? "bg-rose-500 border-rose-400 text-white shadow-rose-300/50 animate-spin-slow" 
+            : "bg-white border-white text-rose-400 hover:bg-rose-50"
         }`}
       >
-        {isPlaying && (
-             <span className="absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-20 animate-ping"></span>
+        {isPlaying ? (
+             <Music size={24} />
+        ) : (
+             <div className="absolute inset-0 rounded-full border-2 border-rose-200 opacity-50 animate-ping" />
         )}
-        <Music size={24} className={isPlaying ? "animate-spin-slow" : ""} />
+        {!isPlaying && <Music size={24} />}
       </button>
 
       <AnimatePresence>
@@ -85,24 +87,24 @@ export default function GlobalMusicPlayer() {
                 initial={{ width: 0, opacity: 0, x: 20 }}
                 animate={{ width: "auto", opacity: 1, x: 0 }}
                 exit={{ width: 0, opacity: 0, x: 20 }}
-                className="glass-card rounded-full pr-6 pl-4 py-2 flex items-center gap-4 overflow-hidden whitespace-nowrap h-14"
+                className="bg-white/80 backdrop-blur-xl border border-white/60 shadow-xl rounded-full pr-6 pl-4 py-2 flex items-center gap-4 overflow-hidden whitespace-nowrap h-14"
             >
-                 <button onClick={togglePlay} className="text-white hover:text-rose-300 transition-colors">
+                 <button onClick={togglePlay} className="text-rose-500 hover:text-rose-600 transition-colors">
                     {isPlaying ? (
-                        <div className="h-3 w-3 bg-white rounded-sm" /> // Pause icon
+                        <div className="h-3 w-3 bg-rose-500 rounded-sm" /> 
                     ) : (
-                        <div className="w-0 h-0 border-t-[5px] border-t-transparent border-l-[8px] border-l-white border-b-[5px] border-b-transparent ml-1" /> // Play icon
+                        <div className="w-0 h-0 border-t-[5px] border-t-transparent border-l-[8px] border-l-rose-500 border-b-[5px] border-b-transparent ml-1" /> 
                     )}
                 </button>
 
                 <div className="flex flex-col justify-center w-24">
-                    <span className="text-sm text-white font-medium leading-none truncate font-serif">{PLAYLIST[currentTrackIndex].title}</span>
-                    <span className="text-[10px] text-white/60 leading-none mt-1 truncate font-sans">{PLAYLIST[currentTrackIndex].artist}</span>
+                    <span className="text-sm text-gray-800 font-medium leading-none truncate font-serif">{PLAYLIST[currentTrackIndex].title}</span>
+                    <span className="text-[10px] text-gray-500 leading-none mt-1 truncate font-sans">{PLAYLIST[currentTrackIndex].artist}</span>
                 </div>
                 
-                <div className="w-px h-6 bg-white/10" />
+                <div className="w-px h-6 bg-gray-200" />
 
-                <button onClick={nextTrack} className="text-white/80 hover:text-white transition-colors">
+                <button onClick={nextTrack} className="text-gray-400 hover:text-rose-500 transition-colors">
                     <SkipForward size={18} />
                 </button>
             </motion.div>

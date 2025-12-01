@@ -5,6 +5,8 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 
+import FallingPetals from "../../components/common/FallingPetals";
+
 export default function GalleryPage() {
   const imageFiles = [
     "10521740385957_.pic_hd.jpg",
@@ -65,19 +67,19 @@ export default function GalleryPage() {
   }));
 
   return (
-    <div className="min-h-screen bg-[#1a0b2e] text-white p-8 relative">
+    <div className="min-h-screen bg-[#fff0f5] text-gray-800 p-8 relative overflow-x-hidden">
        {/* Background decoration */}
+       <FallingPetals />
        <div className="fixed inset-0 pointer-events-none">
-          <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,_rgba(76,29,149,0.2),_rgba(15,23,42,0.5))]" />
-          <div className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-rose-600/20 rounded-full blur-[120px]" />
-          <div className="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] bg-purple-600/20 rounded-full blur-[120px]" />
+          <div className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-rose-300/30 rounded-full blur-[120px]" />
+          <div className="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] bg-pink-200/40 rounded-full blur-[120px]" />
        </div>
 
        <div className="relative z-10 mb-12 flex items-center justify-between max-w-7xl mx-auto">
-             <Link href="/" className="flex items-center gap-2 text-rose-200/60 hover:text-rose-200 transition-colors">
+             <Link href="/" className="flex items-center gap-2 text-rose-400 hover:text-rose-600 transition-colors font-medium">
                 <ArrowLeft /> Back to Space
             </Link>
-            <h1 className="text-4xl font-serif tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-rose-200 to-purple-200 drop-shadow-sm">
+            <h1 className="text-4xl font-serif tracking-widest text-rose-500 drop-shadow-sm">
                 SWEET GALLERY
             </h1>
         </div>
@@ -90,13 +92,13 @@ export default function GalleryPage() {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.05 }}
-                    className={`break-inside-avoid rounded-3xl overflow-hidden relative group cursor-zoom-in shadow-2xl ${photo.height} border border-white/10`}
+                    className={`break-inside-avoid rounded-3xl overflow-hidden relative group cursor-zoom-in shadow-lg hover:shadow-2xl ${photo.height} border border-white/50`}
                 >
                     <div 
                         className="absolute inset-0 w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
                         style={{ backgroundImage: `url('${photo.src}')` }} 
                     />
-                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/60 opacity-60 group-hover:opacity-40 transition-opacity" />
+                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     
                     {/* Caption on hover */}
                     <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
