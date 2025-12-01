@@ -1,16 +1,36 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Heart, Clock, Map, Mail, Music, Gift, Dog, History } from "lucide-react";
+import { Heart, Clock, Map, Mail, Music, Gift, Dog, History, Image as ImageIcon, Box, Gamepad2 } from "lucide-react";
 
 export default function Home() {
   const [password, setPassword] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
   const [error, setError] = useState("");
+  const [timeTogether, setTimeTogether] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
   const correctPassword = "1201";
+  // Set your start date here
+  const startDate = "2023-12-01"; 
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      const start = new Date(startDate).getTime();
+      const now = new Date().getTime();
+      const diff = now - start;
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      setTimeTogether({ days, hours, minutes, seconds });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
 
   const handleLogin = () => {
     if (password === correctPassword) {
@@ -23,31 +43,56 @@ export default function Home() {
 
   if (loggedIn) {
     return (
-      <div className="min-h-screen bg-[#0a0a0a] text-white flex items-center justify-center p-8">
+      <div className="min-h-screen bg-[#0a0a0a] text-white flex flex-col items-center justify-center p-8">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
            <div className="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-rose-900/20 blur-[120px]" />
            <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-blue-900/20 blur-[120px]" />
         </div>
 
-        <div className="max-w-5xl w-full z-10">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
+        {/* Love Timer Section */}
+        <motion.div 
+            initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-center mb-16"
-          >
-            <h1 className="text-5xl font-thin tracking-[0.2em] mb-4">H & Z SPACE</h1>
-            <p className="text-white/40 uppercase tracking-widest text-sm">Welcome back, my love</p>
-          </motion.div>
+            className="mb-12 text-center z-10"
+        >
+             <h1 className="text-5xl font-thin tracking-[0.2em] mb-2">H & Z SPACE</h1>
+             <div className="flex items-center justify-center gap-4 text-rose-300/80 font-light tracking-widest mt-4">
+                <div className="flex flex-col items-center">
+                    <span className="text-3xl font-medium text-white">{timeTogether.days}</span>
+                    <span className="text-xs uppercase opacity-50">Days</span>
+                </div>
+                <span className="text-2xl opacity-30">:</span>
+                <div className="flex flex-col items-center">
+                    <span className="text-3xl font-medium text-white">{timeTogether.hours.toString().padStart(2, '0')}</span>
+                    <span className="text-xs uppercase opacity-50">Hours</span>
+                </div>
+                <span className="text-2xl opacity-30">:</span>
+                <div className="flex flex-col items-center">
+                    <span className="text-3xl font-medium text-white">{timeTogether.minutes.toString().padStart(2, '0')}</span>
+                    <span className="text-xs uppercase opacity-50">Mins</span>
+                </div>
+                <span className="text-2xl opacity-30">:</span>
+                 <div className="flex flex-col items-center">
+                    <span className="text-3xl font-medium text-white">{timeTogether.seconds.toString().padStart(2, '0')}</span>
+                    <span className="text-xs uppercase opacity-50">Secs</span>
+                </div>
+             </div>
+             <p className="text-white/30 text-xs mt-2 tracking-[0.5em] uppercase">Falling in love since {startDate}</p>
+        </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <MenuCard href="/anniversary" title="3D Anniversary" subtitle="Interactive Heart & Gallery" icon={<Heart className="text-rose-400" />} delay={0.1} featured />
-            <MenuCard href="/timeline" title="Timeline" subtitle="Our Story in Time" icon={<History className="text-blue-400" />} delay={0.2} />
-            <MenuCard href="/travel" title="World Map" subtitle="Places We've Been" icon={<Map className="text-emerald-400" />} delay={0.3} />
+        <div className="max-w-6xl w-full z-10">
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <MenuCard href="/anniversary" title="3D Anniversary" subtitle="Interactive Heart" icon={<Heart className="text-rose-400" />} delay={0.1} featured />
+            <MenuCard href="/timeline" title="Timeline" subtitle="Our Story" icon={<History className="text-blue-400" />} delay={0.2} />
+            <MenuCard href="/gallery" title="Sweet Gallery" subtitle="Panoramic Album" icon={<ImageIcon className="text-pink-300" />} delay={0.25} />
+            <MenuCard href="/blindbox" title="Blind Box" subtitle="3D Memories" icon={<Box className="text-purple-300" />} delay={0.3} />
+            <MenuCard href="/travel" title="World Map" subtitle="Our Footprints" icon={<Map className="text-emerald-400" />} delay={0.3} />
+            <MenuCard href="/games" title="Mini Games" subtitle="Witch's Poison" icon={<Gamepad2 className="text-orange-400" />} delay={0.35} />
             <MenuCard href="/mailbox" title="Mailbox" subtitle="Secret Letters" icon={<Mail className="text-yellow-400" />} delay={0.4} />
             <MenuCard href="/wishtree" title="Wish Tree" subtitle="Make a Wish" icon={<Gift className="text-purple-400" />} delay={0.5} />
-            <MenuCard href="/pet" title="Virtual Pet" subtitle="Our Little Companion" icon={<Dog className="text-orange-400" />} delay={0.6} />
-            <MenuCard href="/music" title="Music" subtitle="Our Playlist" icon={<Music className="text-pink-400" />} delay={0.7} />
-            <MenuCard href="/timecapsule" title="Time Capsule" subtitle="Messages for Future" icon={<Clock className="text-cyan-400" />} delay={0.8} />
+            <MenuCard href="/pet" title="Virtual Pet" subtitle="Companion" icon={<Dog className="text-orange-400" />} delay={0.6} />
+            <MenuCard href="/music" title="Music" subtitle="Playlist" icon={<Music className="text-pink-400" />} delay={0.7} />
+            <MenuCard href="/timecapsule" title="Time Capsule" subtitle="Future Messages" icon={<Clock className="text-cyan-400" />} delay={0.8} />
           </div>
         </div>
       </div>
@@ -99,14 +144,14 @@ function MenuCard({ href, title, subtitle, icon, delay, featured = false }: any)
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay, duration: 0.5 }}
         whileHover={{ scale: 1.02, backgroundColor: "rgba(255,255,255,0.08)" }}
-        className={`h-full flex flex-col justify-between p-8 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-sm cursor-pointer group ${featured ? "bg-gradient-to-br from-rose-900/20 to-black/20 border-rose-500/20" : ""}`}
+        className={`h-full flex flex-col justify-between p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm cursor-pointer group ${featured ? "bg-gradient-to-br from-rose-900/20 to-black/20 border-rose-500/20 p-8" : ""}`}
       >
-        <div className="mb-4 bg-white/5 w-12 h-12 rounded-full flex items-center justify-center group-hover:bg-white/10 transition-colors">
+        <div className="mb-4 bg-white/5 w-10 h-10 rounded-full flex items-center justify-center group-hover:bg-white/10 transition-colors">
             {icon}
         </div>
         <div>
-            <h3 className={`font-light mb-1 text-white ${featured ? "text-3xl" : "text-xl"}`}>{title}</h3>
-            <p className="text-white/40 text-sm">{subtitle}</p>
+            <h3 className={`font-light mb-1 text-white ${featured ? "text-3xl" : "text-lg"}`}>{title}</h3>
+            <p className="text-white/40 text-xs uppercase tracking-wider">{subtitle}</p>
         </div>
       </motion.div>
     </Link>
