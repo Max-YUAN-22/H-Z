@@ -43,8 +43,14 @@ export default function Home() {
 
   if (loggedIn) {
     return (
-      <div className="min-h-screen bg-[#0a0a0a] text-white flex flex-col items-center justify-center p-8">
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      <div className="min-h-screen bg-[#0a0a0a] text-white flex flex-col items-center justify-center p-8 relative">
+        {/* Background Image */}
+        <div className="absolute inset-0 z-0">
+            <img src="/H-Z/images/WechatIMG1764.jpg" alt="Background" className="w-full h-full object-cover opacity-20 blur-sm" />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-black/80" />
+        </div>
+
+        <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
            <div className="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-rose-900/20 blur-[120px]" />
            <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-blue-900/20 blur-[120px]" />
         </div>
@@ -101,7 +107,12 @@ export default function Home() {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-[#0a0a0a] relative overflow-hidden">
-       <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 pointer-events-none"></div>
+       {/* Background Image */}
+        <div className="absolute inset-0 z-0">
+            <img src="/H-Z/images/WechatIMG1764.jpg" alt="Background" className="w-full h-full object-cover opacity-30 blur-md" />
+            <div className="absolute inset-0 bg-black/60" />
+        </div>
+       <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 pointer-events-none z-0"></div>
       <motion.div 
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
