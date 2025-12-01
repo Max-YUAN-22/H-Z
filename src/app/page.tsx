@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Heart, Clock, Map, Mail, Music, Gift, Dog, History, Image as ImageIcon, Box, Gamepad2 } from "lucide-react";
@@ -61,7 +61,7 @@ export default function Home() {
         <motion.div 
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            className="relative z-10 w-full max-w-4xl bg-white/80 backdrop-blur-xl rounded-[40px] shadow-2xl overflow-hidden flex flex-col md:flex-row min-h-[600px]"
+            className="relative z-10 w-full max-w-4xl bg-white/90 backdrop-blur-2xl rounded-[40px] shadow-2xl overflow-hidden flex flex-col md:flex-row min-h-[600px]"
         >
             {/* Left Side: Identity & Timer */}
             <div className="w-full md:w-2/5 bg-gradient-to-br from-rose-50/80 to-white/80 p-10 flex flex-col items-center justify-center text-center border-b md:border-b-0 md:border-r border-white/60 relative">
@@ -108,7 +108,7 @@ export default function Home() {
             </div>
 
             {/* Right Side: Menu Grid */}
-            <div className="w-full md:w-3/5 p-8 md:p-12 bg-white/40">
+            <div className="w-full md:w-3/5 p-8 md:p-12 bg-white/60">
                 <h3 className="text-xl font-serif text-gray-700 mb-8 text-center md:text-left pl-2 border-l-4 border-rose-300">
                     Our Love Station
                 </h3>
@@ -194,7 +194,3 @@ function StationItem({ href, icon, label, color }: { href: string, icon: any, la
         </Link>
     );
 }
-
-import React from "react";
-
-

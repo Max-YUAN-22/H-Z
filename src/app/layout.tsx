@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { EmotionalIndexProvider } from "./context/EmotionalIndexContext"; // Import the provider
+import Header from "../components/common/Header";
+import Footer from "../components/common/Footer";
 import GlobalMusicPlayer from "../components/common/GlobalMusicPlayer";
 
 const geistSans = Geist({
@@ -15,8 +17,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "H&Z 空间 - 情侣纪念互动平台", // Updated title
-  description: "为情侣提供独特、浪漫、个性化的回忆与互动平台。", // Updated description
+  title: "H&Z Love Station", 
+  description: "Our exclusive space for memories and love.", 
 };
 
 export default function RootLayout({
@@ -30,9 +32,13 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <EmotionalIndexProvider>
-            {children}
+            <Header />
+            <main className="min-h-screen">
+                {children}
+            </main>
+            <Footer />
             <GlobalMusicPlayer />
-        </EmotionalIndexProvider> {/* Wrap with provider */}
+        </EmotionalIndexProvider> 
       </body>
     </html>
   );
