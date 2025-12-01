@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary: #8a2be2; /* Blue Violet - a romantic purple */
+  --color-secondary: #dda0dd; /* Plum - lighter purple */
+  --color-accent: #e6e6fa; /* Lavender - very light purple, almost white */
+  --color-text: #333333; /* Dark grey for readability */
+  --color-background: #f8f0fc; /* Very light purple background */
+  --color-card-background: #ffffff; /* White for cards */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-primary: #9370db; /* MediumPurple for dark mode */
+    --color-secondary: #b09ddb; /* Lighter purple for dark mode */
+    --color-accent: #4a3c6b; /* Darker purple accent */
+    --color-text: #e0e0e0; /* Light grey for readability in dark mode */
+    --color-background: #200a35; /* Dark purple background */
+    --color-card-background: #3a1c5b; /* Darker purple for cards */
+  }
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-text);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
