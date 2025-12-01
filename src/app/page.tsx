@@ -43,62 +43,74 @@ export default function Home() {
 
   if (loggedIn) {
     return (
-      <div className="min-h-screen bg-[#0a0a0a] text-white flex flex-col items-center justify-center p-8 relative">
-        {/* Background Image */}
+      <div className="min-h-screen bg-[#0a0a0a] text-white flex flex-col items-center justify-center p-8 relative overflow-hidden">
+        {/* Background Image with Soft Romantic Overlay */}
         <div className="absolute inset-0 z-0">
-            <img src="/H-Z/images/WechatIMG1764.jpg" alt="Background" className="w-full h-full object-cover opacity-20 blur-sm" />
-            <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/50 to-black/80" />
+            <img src="/H-Z/images/WechatIMG1764.jpg" alt="Background" className="w-full h-full object-cover opacity-40 blur-sm animate-pulse-soft" />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-purple-900/20 to-black/60 mix-blend-overlay" />
         </div>
 
+        {/* Floating Hearts Animation Layer */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
-           <div className="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-rose-900/20 blur-[120px]" />
-           <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-blue-900/20 blur-[120px]" />
+           {[...Array(20)].map((_, i) => (
+              <motion.div
+                key={i}
+                className="absolute text-rose-300/30"
+                initial={{ 
+                    x: Math.random() * 100 + "vw", 
+                    y: "100vh", 
+                    scale: Math.random() * 0.5 + 0.5,
+                    opacity: 0 
+                }}
+                animate={{ 
+                    y: "-10vh", 
+                    opacity: [0, 0.8, 0],
+                    rotate: Math.random() * 360 
+                }}
+                transition={{ 
+                    duration: Math.random() * 10 + 10, 
+                    repeat: Infinity, 
+                    delay: Math.random() * 10,
+                    ease: "linear" 
+                }}
+              >
+                  <Heart size={Math.random() * 30 + 20} fill="currentColor" />
+              </motion.div>
+           ))}
         </div>
 
         {/* Love Timer Section */}
         <motion.div 
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mb-12 text-center z-10"
+            className="mb-12 text-center z-10 relative"
         >
-             <h1 className="text-5xl font-thin tracking-[0.2em] mb-2">H & Z SPACE</h1>
-             <div className="flex items-center justify-center gap-4 text-rose-300/80 font-light tracking-widest mt-4">
-                <div className="flex flex-col items-center">
-                    <span className="text-3xl font-medium text-white">{timeTogether.days}</span>
-                    <span className="text-xs uppercase opacity-50">Days</span>
-                </div>
-                <span className="text-2xl opacity-30">:</span>
-                <div className="flex flex-col items-center">
-                    <span className="text-3xl font-medium text-white">{timeTogether.hours.toString().padStart(2, '0')}</span>
-                    <span className="text-xs uppercase opacity-50">Hours</span>
-                </div>
-                <span className="text-2xl opacity-30">:</span>
-                <div className="flex flex-col items-center">
-                    <span className="text-3xl font-medium text-white">{timeTogether.minutes.toString().padStart(2, '0')}</span>
-                    <span className="text-xs uppercase opacity-50">Mins</span>
-                </div>
-                <span className="text-2xl opacity-30">:</span>
-                 <div className="flex flex-col items-center">
-                    <span className="text-3xl font-medium text-white">{timeTogether.seconds.toString().padStart(2, '0')}</span>
-                    <span className="text-xs uppercase opacity-50">Secs</span>
-                </div>
+             <h1 className="text-6xl md:text-7xl font-thin tracking-[0.1em] mb-4 font-serif text-white drop-shadow-lg">H & Z SPACE</h1>
+             <div className="glass-card inline-flex items-center justify-center gap-6 md:gap-8 px-8 py-6 rounded-full mt-4">
+                <TimerUnit value={timeTogether.days} label="Days" />
+                <span className="text-3xl text-rose-300/50 pb-4">:</span>
+                <TimerUnit value={timeTogether.hours} label="Hours" />
+                <span className="text-3xl text-rose-300/50 pb-4">:</span>
+                <TimerUnit value={timeTogether.minutes} label="Mins" />
+                <span className="text-3xl text-rose-300/50 pb-4">:</span>
+                <TimerUnit value={timeTogether.seconds} label="Secs" />
              </div>
-             <p className="text-white/30 text-xs mt-2 tracking-[0.5em] uppercase">Falling in love since {startDate}</p>
+             <p className="text-rose-200/80 text-sm mt-6 tracking-[0.3em] uppercase font-medium">Falling in love since {startDate}</p>
         </motion.div>
 
-        <div className="max-w-6xl w-full z-10">
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            <MenuCard href="/anniversary" title="3D Anniversary" subtitle="Interactive Heart" icon={<Heart className="text-rose-400" />} delay={0.1} featured />
-            <MenuCard href="/timeline" title="Timeline" subtitle="Our Story" icon={<History className="text-blue-400" />} delay={0.2} />
-            <MenuCard href="/gallery" title="Sweet Gallery" subtitle="Panoramic Album" icon={<ImageIcon className="text-pink-300" />} delay={0.25} />
-            <MenuCard href="/blindbox" title="Blind Box" subtitle="3D Memories" icon={<Box className="text-purple-300" />} delay={0.3} />
-            <MenuCard href="/travel" title="World Map" subtitle="Our Footprints" icon={<Map className="text-emerald-400" />} delay={0.3} />
-            <MenuCard href="/games" title="Mini Games" subtitle="Witch's Poison" icon={<Gamepad2 className="text-orange-400" />} delay={0.35} />
-            <MenuCard href="/mailbox" title="Mailbox" subtitle="Secret Letters" icon={<Mail className="text-yellow-400" />} delay={0.4} />
-            <MenuCard href="/wishtree" title="Wish Tree" subtitle="Make a Wish" icon={<Gift className="text-purple-400" />} delay={0.5} />
-            <MenuCard href="/pet" title="Virtual Pet" subtitle="Companion" icon={<Dog className="text-orange-400" />} delay={0.6} />
-            <MenuCard href="/music" title="Music" subtitle="Playlist" icon={<Music className="text-pink-400" />} delay={0.7} />
-            <MenuCard href="/timecapsule" title="Time Capsule" subtitle="Future Messages" icon={<Clock className="text-cyan-400" />} delay={0.8} />
+        <div className="max-w-7xl w-full z-10">
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <MenuCard href="/anniversary" title="Anniversary" subtitle="Interactive Heart" icon={<Heart className="text-rose-400" />} delay={0.1} featured />
+            <MenuCard href="/timeline" title="Timeline" subtitle="Our Story" icon={<History className="text-blue-300" />} delay={0.2} />
+            <MenuCard href="/gallery" title="Gallery" subtitle="Sweet Moments" icon={<ImageIcon className="text-pink-300" />} delay={0.25} />
+            <MenuCard href="/blindbox" title="Blind Box" subtitle="Surprises" icon={<Box className="text-purple-300" />} delay={0.3} />
+            <MenuCard href="/travel" title="Travel" subtitle="World Map" icon={<Map className="text-emerald-300" />} delay={0.3} />
+            <MenuCard href="/games" title="Games" subtitle="Play Together" icon={<Gamepad2 className="text-orange-300" />} delay={0.35} />
+            <MenuCard href="/mailbox" title="Mailbox" subtitle="Secret Letters" icon={<Mail className="text-yellow-300" />} delay={0.4} />
+            <MenuCard href="/wishtree" title="Wish Tree" subtitle="Make a Wish" icon={<Gift className="text-indigo-300" />} delay={0.5} />
+            <MenuCard href="/pet" title="Pet" subtitle="Our Companion" icon={<Dog className="text-amber-300" />} delay={0.6} />
+            <MenuCard href="/music" title="Music" subtitle="Our Playlist" icon={<Music className="text-cyan-300" />} delay={0.7} />
+            <MenuCard href="/timecapsule" title="Time Capsule" subtitle="Future Us" icon={<Clock className="text-teal-300" />} delay={0.8} />
           </div>
         </div>
       </div>
@@ -147,6 +159,19 @@ export default function Home() {
   );
 }
 
+function TimerUnit({ value, label }: { value: number, label: string }) {
+    return (
+        <div className="flex flex-col items-center">
+            <span className="text-4xl md:text-5xl font-light text-white drop-shadow-md font-serif">
+                {value.toString().padStart(2, '0')}
+            </span>
+            <span className="text-[10px] md:text-xs uppercase tracking-[0.2em] text-rose-200/70 mt-1 font-sans">
+                {label}
+            </span>
+        </div>
+    );
+}
+
 function MenuCard({ href, title, subtitle, icon, delay, featured = false }: any) {
   return (
     <Link href={href} className={featured ? "md:col-span-2 md:row-span-2" : ""}>
@@ -154,15 +179,21 @@ function MenuCard({ href, title, subtitle, icon, delay, featured = false }: any)
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay, duration: 0.5 }}
-        whileHover={{ scale: 1.02, backgroundColor: "rgba(255,255,255,0.08)" }}
-        className={`h-full flex flex-col justify-between p-6 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm cursor-pointer group ${featured ? "bg-gradient-to-br from-rose-900/20 to-black/20 border-rose-500/20 p-8" : ""}`}
+        whileHover={{ scale: 1.03, y: -5 }}
+        className={`h-full flex flex-col justify-between p-6 rounded-3xl cursor-pointer group transition-all duration-300 ${
+            featured 
+            ? "bg-gradient-to-br from-rose-500/20 to-purple-600/20 border border-rose-200/30 shadow-[0_0_30px_rgba(244,63,94,0.2)] p-8 backdrop-blur-xl" 
+            : "glass-card hover:bg-white/20 hover:border-white/40 hover:shadow-lg"
+        }`}
       >
-        <div className="mb-4 bg-white/5 w-10 h-10 rounded-full flex items-center justify-center group-hover:bg-white/10 transition-colors">
+        <div className={`mb-4 w-12 h-12 rounded-full flex items-center justify-center transition-colors duration-300 ${
+            featured ? "bg-rose-500/20 group-hover:bg-rose-500/30 text-white" : "bg-white/10 group-hover:bg-white/20"
+        }`}>
             {icon}
         </div>
         <div>
-            <h3 className={`font-light mb-1 text-white ${featured ? "text-3xl" : "text-lg"}`}>{title}</h3>
-            <p className="text-white/40 text-xs uppercase tracking-wider">{subtitle}</p>
+            <h3 className={`font-light mb-1 text-white font-serif ${featured ? "text-3xl" : "text-xl"}`}>{title}</h3>
+            <p className="text-white/60 text-xs uppercase tracking-wider font-sans">{subtitle}</p>
         </div>
       </motion.div>
     </Link>

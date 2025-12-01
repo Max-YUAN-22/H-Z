@@ -65,33 +65,44 @@ export default function GalleryPage() {
   }));
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white p-8">
-       <div className="mb-8 flex items-center justify-between max-w-7xl mx-auto">
-             <Link href="/" className="flex items-center gap-2 text-white/60 hover:text-white transition-colors">
+    <div className="min-h-screen bg-[#1a0b2e] text-white p-8 relative">
+       {/* Background decoration */}
+       <div className="fixed inset-0 pointer-events-none">
+          <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,_rgba(76,29,149,0.2),_rgba(15,23,42,0.5))]" />
+          <div className="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-rose-600/20 rounded-full blur-[120px]" />
+          <div className="absolute bottom-[-10%] left-[-10%] w-[500px] h-[500px] bg-purple-600/20 rounded-full blur-[120px]" />
+       </div>
+
+       <div className="relative z-10 mb-12 flex items-center justify-between max-w-7xl mx-auto">
+             <Link href="/" className="flex items-center gap-2 text-rose-200/60 hover:text-rose-200 transition-colors">
                 <ArrowLeft /> Back to Space
             </Link>
-            <h1 className="text-2xl font-light tracking-widest">SWEET GALLERY</h1>
+            <h1 className="text-4xl font-serif tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-rose-200 to-purple-200 drop-shadow-sm">
+                SWEET GALLERY
+            </h1>
         </div>
 
-        <div className="columns-1 md:columns-3 lg:columns-4 gap-4 space-y-4 max-w-7xl mx-auto">
+        <div className="relative z-10 columns-1 md:columns-3 lg:columns-4 gap-6 space-y-6 max-w-7xl mx-auto pb-20">
             {photos.map((photo, index) => (
                 <motion.div
                     key={photo.id}
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    transition={{ delay: index * 0.1 }}
-                    className={`break-inside-avoid rounded-2xl overflow-hidden relative group cursor-zoom-in ${photo.height}`}
+                    transition={{ delay: index * 0.05 }}
+                    className={`break-inside-avoid rounded-3xl overflow-hidden relative group cursor-zoom-in shadow-2xl ${photo.height} border border-white/10`}
                 >
                     <div 
                         className="absolute inset-0 w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
                         style={{ backgroundImage: `url('${photo.src}')` }} 
                     />
-                    <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors" />
+                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/60 opacity-60 group-hover:opacity-40 transition-opacity" />
                     
                     {/* Caption on hover */}
-                    <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
-                        <p className="text-sm font-medium">Sweet Moment #{index + 1}</p>
+                    <div className="absolute bottom-0 left-0 right-0 p-6 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                        <p className="text-white font-serif italic text-lg drop-shadow-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">
+                            Moment #{index + 1}
+                        </p>
                     </div>
                 </motion.div>
             ))}

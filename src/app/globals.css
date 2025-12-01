@@ -3,28 +3,75 @@
 @tailwind utilities;
 
 :root {
-  --color-primary: #8a2be2; /* Blue Violet - a romantic purple */
-  --color-secondary: #dda0dd; /* Plum - lighter purple */
-  --color-accent: #e6e6fa; /* Lavender - very light purple, almost white */
-  --color-text: #333333; /* Dark grey for readability */
-  --color-background: #f8f0fc; /* Very light purple background */
-  --color-card-background: #ffffff; /* White for cards */
+  --background: #0a0a0a;
+  --foreground: #ededed;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-primary: #9370db; /* MediumPurple for dark mode */
-    --color-secondary: #b09ddb; /* Lighter purple for dark mode */
-    --color-accent: #4a3c6b; /* Darker purple accent */
-    --color-text: #e0e0e0; /* Light grey for readability in dark mode */
-    --color-background: #200a35; /* Dark purple background */
-    --color-card-background: #3a1c5b; /* Darker purple for cards */
-  }
+@font-face {
+    font-family: 'Dancing Script';
+    src: url('https://fonts.gstatic.com/s/dancingscript/v24/If2cXTr6YS-zF4S-kcSWSVi_sxjsohD9F50Ruo3P9LeqeJppkc57K4s.woff2') format('woff2');
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
 }
 
 body {
-  background-color: var(--color-background);
-  color: var(--color-text);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--foreground);
+  background: var(--background);
+  font-family: "Times New Roman", serif; /* More romantic/classic default */
 }
 
+/* Glassmorphism Utilities */
+.glass {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
+
+.glass-strong {
+    background: rgba(20, 20, 20, 0.6);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Floating Animation */
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0px); }
+}
+
+.animate-float {
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes pulse-soft {
+    0%, 100% { opacity: 0.8; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.05); }
+}
+
+.animate-pulse-soft {
+    animation: pulse-soft 3s ease-in-out infinite;
+}
+
+/* Romantic Gradient Text */
+.text-gradient-gold {
+    background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.text-gradient-rose {
+    background: linear-gradient(to right, #ffafbd, #ffc3a0);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
