@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useEmotionalIndex } from "../context/EmotionalIndexContext";
 import useLocalStorage from "../hooks/useLocalStorage"; // Import useLocalStorage
@@ -56,17 +56,22 @@ export default function TimeCapsulePage() {
 
   const checkUnlockStatus = () => {
     const today = new Date().toISOString().split('T')[0];
-    setCapsules(
-      capsules.map((cap) =>
-        new Date(cap.unlockDate) <= new Date(today) && !cap.isUnlocked
-          ? { ...cap, isUnlocked: true }
-          : cap
-      )
-    );
+    let hasChanges = false;
+    const newCapsules = capsules.map((cap) => {
+      if (new Date(cap.unlockDate) <= new Date(today) && !cap.isUnlocked) {
+        hasChanges = true;
+        return { ...cap, isUnlocked: true };
+      }
+      return cap;
+    });
+
+    if (hasChanges) {
+      setCapsules(newCapsules);
+    }
   };
 
   // Check unlock status on page load/update
-  useState(() => {
+  useEffect(() => {
     checkUnlockStatus();
   }, [capsules]);
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useEmotionalIndex } from "../context/EmotionalIndexContext";
 import useLocalStorage from "../hooks/useLocalStorage"; // Import useLocalStorage
@@ -50,17 +50,22 @@ export default function MailboxPage() {
 
   const checkUnlockStatus = () => {
     const today = new Date().toISOString().split('T')[0];
-    setMessages(
-      messages.map((msg) =>
-        new Date(msg.unlockDate) <= new Date(today) && !msg.isUnlocked
-          ? { ...msg, isUnlocked: true }
-          : msg
-      )
-    );
+    let hasChanges = false;
+    const newMessages = messages.map((msg) => {
+      if (new Date(msg.unlockDate) <= new Date(today) && !msg.isUnlocked) {
+        hasChanges = true;
+        return { ...msg, isUnlocked: true };
+      }
+      return msg;
+    });
+    
+    if (hasChanges) {
+      setMessages(newMessages);
+    }
   };
 
   // Check unlock status on page load/update
-  useState(() => {
+  useEffect(() => {
     checkUnlockStatus();
   }, [messages]);
 

@@ -31,7 +31,7 @@ export default function TimelinePage() {
 
     const newId = memories.length > 0 ? Math.max(...memories.map(m => m.id)) + 1 : 1;
     const mediaPlaceholders = mediaFiles.map(file => ({
-      type: file.type.startsWith("image") ? "image" : "video",
+      type: (file.type.startsWith("image") ? "image" : "video") as "image" | "video",
       url: URL.createObjectURL(file) // Use blob URL for preview
     }));
 
