@@ -14,7 +14,7 @@ export default function Home() {
   const [timeTogether, setTimeTogether] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
   const correctPassword = "1201";
-  const startDate = "2023-12-01"; 
+  const startDate = "2024-12-01"; 
 
   useEffect(() => {
     const timer = setInterval(() => {
