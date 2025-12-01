@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
-import TimelinePage from "./timeline/page"; // Import the TimelinePage component
+import Link from "next/link";
+import { motion } from "framer-motion";
+import { Heart, Clock, Map, Mail, Music, Gift, Dog, History } from "lucide-react";
 
 export default function Home() {
   const [password, setPassword] = useState("");
@@ -16,48 +17,99 @@ export default function Home() {
       setLoggedIn(true);
       setError("");
     } else {
-      setError("纪念日密码错误，请重试。"); // Anniversary password incorrect, please try again.
+      setError("纪念日密码错误，请重试。");
     }
   };
 
   if (loggedIn) {
-    return <TimelinePage />; // Render the TimelinePage after successful login
+    return (
+      <div className="min-h-screen bg-[#0a0a0a] text-white flex items-center justify-center p-8">
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+           <div className="absolute top-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full bg-rose-900/20 blur-[120px]" />
+           <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-blue-900/20 blur-[120px]" />
+        </div>
+
+        <div className="max-w-5xl w-full z-10">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center mb-16"
+          >
+            <h1 className="text-5xl font-thin tracking-[0.2em] mb-4">H & Z SPACE</h1>
+            <p className="text-white/40 uppercase tracking-widest text-sm">Welcome back, my love</p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <MenuCard href="/anniversary" title="3D Anniversary" subtitle="Interactive Heart & Gallery" icon={<Heart className="text-rose-400" />} delay={0.1} featured />
+            <MenuCard href="/timeline" title="Timeline" subtitle="Our Story in Time" icon={<History className="text-blue-400" />} delay={0.2} />
+            <MenuCard href="/travel" title="World Map" subtitle="Places We've Been" icon={<Map className="text-emerald-400" />} delay={0.3} />
+            <MenuCard href="/mailbox" title="Mailbox" subtitle="Secret Letters" icon={<Mail className="text-yellow-400" />} delay={0.4} />
+            <MenuCard href="/wishtree" title="Wish Tree" subtitle="Make a Wish" icon={<Gift className="text-purple-400" />} delay={0.5} />
+            <MenuCard href="/pet" title="Virtual Pet" subtitle="Our Little Companion" icon={<Dog className="text-orange-400" />} delay={0.6} />
+            <MenuCard href="/music" title="Music" subtitle="Our Playlist" icon={<Music className="text-pink-400" />} delay={0.7} />
+            <MenuCard href="/timecapsule" title="Time Capsule" subtitle="Messages for Future" icon={<Clock className="text-cyan-400" />} delay={0.8} />
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[var(--color-background)]">
-      <div className="flex flex-col items-center justify-center rounded-lg bg-[var(--color-card-background)] p-8 shadow-lg">
-        <h1 className="mb-4 text-2xl font-bold text-[var(--color-primary)]">H&Z空间</h1>
-        <p className="mb-6 text-[var(--color-text)]">请输入纪念日密码</p>
-        <input
-          type="password"
-          className="mb-4 rounded-md border border-[var(--color-secondary)] p-2 text-center text-[var(--color-text)] focus:border-[var(--color-primary)] focus:outline-none"
-          placeholder="密码"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          onKeyPress={(e) => {
-            if (e.key === "Enter") {
-              handleLogin();
-            }
-          }}
-        />
-        <button
-          className="rounded-md bg-[var(--color-primary)] px-4 py-2 text-white hover:bg-[var(--color-secondary)]"
-          onClick={handleLogin}
-        >
-          进入空间
-        </button>
-        {error && <p className="mt-4 text-red-500">{error}</p>}
-      </div>
-      <div className="absolute top-4 left-4">
-            {/* Placeholder for Dog element */}
-            <Image src="/dog-icon.svg" alt="Dog" width={50} height={50} className="opacity-50" />
+    <div className="flex min-h-screen items-center justify-center bg-[#0a0a0a] relative overflow-hidden">
+       <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 pointer-events-none"></div>
+      <motion.div 
+        initial={{ scale: 0.9, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        className="relative z-10 flex flex-col items-center justify-center rounded-2xl bg-white/5 backdrop-blur-xl border border-white/10 p-12 shadow-2xl w-full max-w-md"
+      >
+        <h1 className="mb-2 text-3xl font-light tracking-[0.3em] text-white">H&Z</h1>
+        <p className="mb-8 text-white/40 text-xs uppercase tracking-widest">Private Space</p>
+        
+        <div className="w-full space-y-4">
+            <input
+            type="password"
+            className="w-full rounded-lg bg-black/20 border border-white/10 p-4 text-center text-white placeholder-white/20 focus:border-rose-500/50 focus:outline-none transition-all"
+            placeholder="ENTER PASSCODE"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            onKeyPress={(e) => {
+                if (e.key === "Enter") {
+                handleLogin();
+                }
+            }}
+            />
+            <button
+            className="w-full rounded-lg bg-rose-500/80 hover:bg-rose-500 p-4 text-white font-medium tracking-wider transition-all"
+            onClick={handleLogin}
+            >
+            ENTER
+            </button>
         </div>
-        <div className="absolute bottom-4 right-4">
-            {/* Placeholder for Cat element */}
-            <Image src="/cat-icon.svg" alt="Cat" width={50} height={50} className="opacity-50" />
-        </div>
+        {error && <p className="mt-4 text-rose-400 text-sm">{error}</p>}
+      </motion.div>
     </div>
+  );
+}
+
+function MenuCard({ href, title, subtitle, icon, delay, featured = false }: any) {
+  return (
+    <Link href={href} className={featured ? "md:col-span-2 md:row-span-2" : ""}>
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay, duration: 0.5 }}
+        whileHover={{ scale: 1.02, backgroundColor: "rgba(255,255,255,0.08)" }}
+        className={`h-full flex flex-col justify-between p-8 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-sm cursor-pointer group ${featured ? "bg-gradient-to-br from-rose-900/20 to-black/20 border-rose-500/20" : ""}`}
+      >
+        <div className="mb-4 bg-white/5 w-12 h-12 rounded-full flex items-center justify-center group-hover:bg-white/10 transition-colors">
+            {icon}
+        </div>
+        <div>
+            <h3 className={`font-light mb-1 text-white ${featured ? "text-3xl" : "text-xl"}`}>{title}</h3>
+            <p className="text-white/40 text-sm">{subtitle}</p>
+        </div>
+      </motion.div>
+    </Link>
   );
 }
 
