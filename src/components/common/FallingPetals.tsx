@@ -2,7 +2,15 @@
 
 import React, { useEffect, useRef } from 'react';
 
-export default function FallingPetals() {
+// Reusing part of the heart drawing logic from the user's provided 爱心代码.html
+const pointOnHeart = (t: number) => {
+    return {
+        x: 160 * Math.pow(Math.sin(t), 3),
+        y: 130 * Math.cos(t) - 50 * Math.cos(2 * t) - 20 * Math.cos(3 * t) - 10 * Math.cos(4 * t) + 25
+    };
+};
+
+export default function FallingHearts() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -17,10 +25,39 @@ export default function FallingPetals() {
     canvas.width = width;
     canvas.height = height;
 
-    const petals: Petal[] = [];
-    const petalCount = 60; // Number of petals
+    // Create an offscreen canvas to draw the heart shape once
+    const heartCanvas = document.createElement('canvas');
+    const heartCtx = heartCanvas.getContext('2d');
+    const heartSize = 30; // Base size for the heart particle
+    heartCanvas.width = heartSize;
+    heartCanvas.height = heartSize;
 
-    class Petal {
+    if (heartCtx) {
+        heartCtx.beginPath();
+        let t = -Math.PI;
+        let point = pointOnHeart(t);
+        
+        // Scale and translate the heart path to fit within heartCanvas
+        const scaleFactor = heartSize / 350; // Adjust for heart drawing coordinates
+        const offsetX = heartSize / 2;
+        const offsetY = heartSize / 2;
+
+        heartCtx.moveTo(offsetX + point.x * scaleFactor, offsetY - point.y * scaleFactor);
+        while (t < Math.PI) {
+            t += 0.05; // Less precision for faster drawing
+            point = pointOnHeart(t);
+            heartCtx.lineTo(offsetX + point.x * scaleFactor, offsetY - point.y * scaleFactor);
+        }
+        heartCtx.closePath();
+        heartCtx.fillStyle = '#ffb7c5'; // Sakura color for hearts
+        heartCtx.fill();
+    }
+    
+    // Particle settings for hearts
+    const heartParticles: HeartParticle[] = [];
+    const particleCount = 60; 
+
+    class HeartParticle {
       x: number;
       y: number;
       vx: number;
@@ -32,13 +69,13 @@ export default function FallingPetals() {
 
       constructor() {
         this.x = Math.random() * width;
-        this.y = Math.random() * height - height;
-        this.vx = Math.random() * 1 + 0.5; // Horizontal drift
-        this.vy = Math.random() * 2 + 1; // Falling speed
+        this.y = Math.random() * height - height; // Start above screen
+        this.vx = Math.random() * 0.5 - 0.25; // Slight horizontal drift
+        this.vy = Math.random() * 1 + 0.5; // Falling speed
         this.rotation = Math.random() * 360;
-        this.rotationSpeed = Math.random() * 2 - 1;
-        this.size = Math.random() * 10 + 10;
-        this.opacity = Math.random() * 0.5 + 0.3;
+        this.rotationSpeed = Math.random() * 1 - 0.5; // Rotate slowly
+        this.size = Math.random() * 0.5 + 0.5; // Scale factor for heart image
+        this.opacity = Math.random() * 0.4 + 0.2; // Semi-transparent
       }
 
       update() {
@@ -46,14 +83,11 @@ export default function FallingPetals() {
         this.y += this.vy;
         this.rotation += this.rotationSpeed;
 
-        // Wind effect
-        this.vx += Math.sin(this.y * 0.005) * 0.01;
-
         // Reset if out of bounds
-        if (this.y > height + 50 || this.x > width + 50 || this.x < -50) {
-          this.y = -50;
+        if (this.y > height + heartSize * this.size || this.x > width + heartSize * this.size || this.x < -heartSize * this.size) {
+          this.y = -heartSize * this.size; // Reset to top
           this.x = Math.random() * width;
-          this.vy = Math.random() * 2 + 1;
+          this.vy = Math.random() * 1 + 0.5;
         }
       }
 
@@ -64,29 +98,24 @@ export default function FallingPetals() {
         ctx.rotate((this.rotation * Math.PI) / 180);
         ctx.globalAlpha = this.opacity;
         
-        // Draw a simple petal shape
-        ctx.beginPath();
-        ctx.moveTo(0, 0);
-        ctx.bezierCurveTo(this.size / 2, -this.size / 2, this.size, 0, 0, this.size);
-        ctx.bezierCurveTo(-this.size, 0, -this.size / 2, -this.size / 2, 0, 0);
-        ctx.fillStyle = '#ffb7c5'; // Sakura color
-        ctx.fill();
+        const currentSize = heartSize * this.size;
+        ctx.drawImage(heartCanvas, -currentSize / 2, -currentSize / 2, currentSize, currentSize);
         
         ctx.restore();
       }
     }
 
-    // Initialize petals
-    for (let i = 0; i < petalCount; i++) {
-      petals.push(new Petal());
+    // Initialize particles
+    for (let i = 0; i < particleCount; i++) {
+      heartParticles.push(new HeartParticle());
     }
 
     // Animation loop
     const animate = () => {
       ctx.clearRect(0, 0, width, height);
-      petals.forEach(petal => {
-        petal.update();
-        petal.draw();
+      heartParticles.forEach(particle => {
+        particle.update();
+        particle.draw();
       });
       requestAnimationFrame(animate);
     };
@@ -108,7 +137,7 @@ export default function FallingPetals() {
   return (
     <canvas 
         ref={canvasRef} 
-        className="fixed inset-0 pointer-events-none z-0"
+        className="fixed inset-0 pointer-events-none z-[1]" // z-index above background image but below content
     />
   );
 }

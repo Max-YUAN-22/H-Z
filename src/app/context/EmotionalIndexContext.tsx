@@ -1,7 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useState, ReactNode } from "react";
-import useLocalStorage from "../hooks/useLocalStorage"; // Import useLocalStorage
+import useLocalStorage from "../../hooks/useLocalStorage"; // Import useLocalStorage
 
 interface EmotionalIndexContextType {
   emotionalIndex: number;

@@ -4,7 +4,7 @@ import { useState, useRef } from "react";
 import Link from "next/link";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useEmotionalIndex } from "../context/EmotionalIndexContext";
-import useLocalStorage from "../hooks/useLocalStorage";
+import useLocalStorage from "../../hooks/useLocalStorage";
 import { Plus, Calendar, Image as ImageIcon, Video, MapPin, ArrowLeft } from "lucide-react";
 
 interface Memory {

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>给亲爱的你</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fce4ec;
+            text-align: center;
+            padding: 50px;
+        }
+        h1 {
+            color: #e91e63;
+        }
+        p {
+            font-size: 18px;
+            color: #9c27b0;
+        }
+        button {
+            background-color: #e91e63;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .hidden {
+            display: none;
+        }
+        .message {
+            margin-top: 20px;
+            font-size: 20px;
+            color: #e91e63;
+        }
+    </style>
+</head>
+<body>
+    <h1>致亲爱的你</h1>
+    <p>我知道我有时候很笨，惹你生气了。对不起，我保证以后会更加努力，让你每天都开开心心！</p>
+
+    <h2>你喜欢我吗？</h2>
+    <button id="yesBtn">喜欢</button>
+    <button id="noBtn">不喜欢</button>
+    <div id="likeResponse" class="hidden message"></div>
+
+    <h2>我帅吗？</h2>
+    <button id="handsomeBtn">帅</button>
+    <button id="notHandsomeBtn">不帅</button>
+    <div id="handsomeResponse" class="hidden message"></div>
+
+    <h2>原谅我好不好？</h2>
+    <button id="forgiveBtn">原谅你</button>
+    <button id="notForgiveBtn">不原谅</button>
+    <div id="forgiveResponse" class="hidden message"></div>
+
+    <div id="responseMessage" class="hidden message">
+    </div>
+
+    <script>
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const handsomeBtn = document.getElementById('handsomeBtn');
+        const notHandsomeBtn = document.getElementById('notHandsomeBtn');
+        const forgiveBtn = document.getElementById('forgiveBtn');
+        const notForgiveBtn = document.getElementById('notForgiveBtn');
+
+        const likeResponse = document.getElementById('likeResponse');
+        const handsomeResponse = document.getElementById('handsomeResponse');
+        const forgiveResponse = document.getElementById('forgiveResponse');
+
+        yesBtn.addEventListener('click', function() {
+            if (!likeResponse.classList.contains('hidden')) return;
+            likeResponse.textContent = '我就知道你也喜欢我！';
+            likeResponse.classList.remove('hidden');
+            disableButtons(yesBtn);
+        });
+
+        noBtn.addEventListener('click', function() {
+            if (!likeResponse.classList.contains('hidden')) return;
+            likeResponse.textContent = '我会努力！你一定不是真的这样想，对吗？';
+            likeResponse.classList.remove('hidden');
+            updateButtons(yesBtn, noBtn, likeResponse);
+        });
+
+        handsomeBtn.addEventListener('click', function() {
+            if (!handsomeResponse.classList.contains('hidden')) return;
+            handsomeResponse.textContent = '那是当然，也不看看是谁的男朋友！';
+            handsomeResponse.classList.remove('hidden');
+            disableButtons(handsomeBtn);
+        });
+
+        notHandsomeBtn.addEventListener('click', function() {
+            if (!handsomeResponse.classList.contains('hidden')) return;
+            handsomeResponse.textContent = '没眼光！不过我还是爱你的！';
+            handsomeResponse.classList.remove('hidden');
+            updateButtons(handsomeBtn, notHandsomeBtn, handsomeResponse);
+        });
+
+        forgiveBtn.addEventListener('click', function() {
+            if (!forgiveResponse.classList.contains('hidden')) return;
+            forgiveResponse.textContent = '我就知道你最好了！';
+            forgiveResponse.classList.remove('hidden');
+            disableButtons(forgiveBtn);
+        });
+
+        notForgiveBtn.addEventListener('click', function() {
+            if (!forgiveResponse.classList.contains('hidden')) return;
+            forgiveResponse.textContent = '好吧，你告诉我哪里不满意，我再想想办法！';
+            forgiveResponse.classList.remove('hidden');
+            updateButtons(forgiveBtn, notForgiveBtn, forgiveResponse);
+        });
+
+        function disableButtons(btn) {
+            btn.disabled = true;
+        }
+
+        function enableButtons(btn1, btn2) {
+            btn1.disabled = false;
+            btn2.disabled = false;
+        }
+
+        function updateButtons(btn1, btn2, responseDiv) {
+            // 检查是否已经存在重新选择按钮
+            if (responseDiv.parentNode.querySelector('.updateBtn')) {
+                return; // 如果存在，则不创建新的按钮
+            }
+
+            const updateBtn = document.createElement('button');
+            updateBtn.textContent = '重新选择';
+            updateBtn.style.marginTop = '10px';
+            updateBtn.classList.add('updateBtn'); // 添加一个类名，方便查找
+            updateBtn.addEventListener('click', function() {
+                responseDiv.classList.add('hidden');
+                enableButtons(btn1, btn2);
+                updateBtn.remove();
+            });
+            responseDiv.parentNode.insertBefore(updateBtn, responseDiv.nextSibling);
+        }
+    </script>
+</body>
+</html>

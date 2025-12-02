@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useEmotionalIndex } from "../context/EmotionalIndexContext";
-import useLocalStorage from "../hooks/useLocalStorage"; // Import useLocalStorage
+import useLocalStorage from "../../hooks/useLocalStorage"; // Import useLocalStorage
 
 interface Wish {
   id: number;
