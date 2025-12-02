@@ -17,9 +17,24 @@ interface Memory {
 
 import FallingPetals from "../../components/common/FallingPetals";
 
+const INITIAL_MEMORIES: Memory[] = [
+  { id: 1, date: "2024-08-24", title: "相遇", description: "因为面试的一把伞", media: [] },
+  { id: 2, date: "2024-08-29", title: "第一次聊天", description: "", media: [] },
+  { id: 3, date: "2024-08-31", title: "LCWC蹭饭偶遇失败", description: "", media: [] },
+  { id: 4, date: "2024-09-01", title: "CKLC第一次吃饭", description: "陪hh面试+遇到小猫", media: [] },
+  { id: 5, date: "2024-09-07", title: "hh帮我买水果", description: "", media: [] },
+  { id: 6, date: "2024-09-08", title: "时光屋第二次吃饭", description: "小插曲", media: [] },
+  { id: 7, date: "2024-09-12", title: "第二次演讲队训练后的散步", description: "深度聊天+看无人机", media: [] },
+  { id: 8, date: "2024-09-16", title: "图书馆见面", description: "", media: [] },
+  { id: 9, date: "2024-09-17", title: "中秋节拍月亮", description: "想和你吃饭😭", media: [] },
+  { id: 10, date: "2024-09-21", title: "一起看烟花", description: "", media: [] },
+  { id: 11, date: "2024-09-22", title: "公主包饺子嘻嘻", description: "", media: [] },
+  { id: 12, date: "2024-12-01", title: "在一起", description: "❤️", media: [] },
+];
+
 export default function TimelinePage() {
   const { emotionalIndex, increaseEmotionalIndex } = useEmotionalIndex();
-  const [memories, setMemories] = useLocalStorage<Memory[]>("memories", []);
+  const [memories, setMemories] = useLocalStorage<Memory[]>("memories_v2", INITIAL_MEMORIES);
   const [newMemory, setNewMemory] = useState<Omit<Memory, "id" | "media">>({
     date: "",
     title: "",
