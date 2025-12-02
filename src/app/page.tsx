@@ -6,10 +6,12 @@ import { motion } from "framer-motion";
 import { Heart, Clock, Map, Mail, Music, Gift, Dog, History, Image as ImageIcon, Box, Gamepad2 } from "lucide-react";
 
 import FallingPetals from "../components/common/FallingPetals";
+import LandingScene from "../components/home/LandingScene";
+import useLocalStorage from "../hooks/useLocalStorage";
 
 export default function Home() {
   const [password, setPassword] = useState("");
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useLocalStorage("hz_logged_in", false);
   const [error, setError] = useState("");
   const [timeTogether, setTimeTogether] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
@@ -50,9 +52,9 @@ export default function Home() {
             <img 
                 src="/H-Z/images/WechatIMG1764.jpg" 
                 alt="Background" 
-                className="w-full h-full object-cover opacity-10 scale-110 blur-md" 
+                className="w-full h-full object-cover opacity-20 scale-110 blur-xl" 
             />
-            <div className="absolute inset-0 bg-gradient-to-tr from-rose-100/60 to-white/60 mix-blend-overlay" />
+            <div className="absolute inset-0 bg-white/80" />
         </div>
 
         <FallingPetals />
@@ -143,10 +145,8 @@ export default function Home() {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-[#fafafa] relative overflow-hidden">
-       {/* Clean Background */}
-        <div className="absolute inset-0 z-0">
-            <img src="/H-Z/images/WechatIMG1764.jpg" alt="Background" className="w-full h-full object-cover opacity-10 blur-xl" />
-        </div>
+       {/* 3D Background Scene */}
+       <LandingScene />
        
        <FallingPetals />
 
